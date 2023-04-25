@@ -1,10 +1,13 @@
 PORT = /dev/ttyUSB0
 
+C++ = avr-g++
 CC = avr-gcc
 LD = avr-ld
 RM = rm -f
 
-MCU=atmega32u4
+MCU = atmega32u4
+TARGET = main
+SRCS += main.cpp
 
 CFLAGS += -mcall-prologues
 CFLAGS += -mmcu=$(MCU)
@@ -13,13 +16,19 @@ CFLAGS += -g
 CFLAGS += -Wl,-gc-sections
 CFLAGS += -Wl,-relax
 
-TARGET = main
-SRCS += main.c
+include zumo.mk
+
 OBJS := $(patsubst %.c,%.o, $(SRCS))
+OBJS := $(patsubst %.cpp,%.o, $(OBJS))
+
+MAKEFLAGS += -j4
 
 .PHONY: all clean flash
 
 all: $(TARGET).hex
+
+%.o: %.cpp
+	$(C++) -c $(CFLAGS) $< -o $@
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@

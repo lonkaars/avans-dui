@@ -1,3 +1,27 @@
 [submodule "zumo/lib/zumo-32u4-arduino-library"]
 	path = zumo/lib/zumo-32u4-arduino-library
 	url = https://github.com/pololu/zumo-32u4-arduino-library
+[submodule "zumo/lib/fastgpio-arduino"]
+	path = zumo/lib/fastgpio-arduino
+	url = https://github.com/pololu/fastgpio-arduino
+[submodule "zumo/lib/pushbutton-arduino"]
+	path = zumo/lib/pushbutton-arduino
+	url = https://github.com/pololu/pushbutton-arduino
+[submodule "zumo/lib/ArduinoCore-avr"]
+	path = zumo/lib/ArduinoCore-avr
+	url = https://github.com/arduino/ArduinoCore-avr
+[submodule "zumo/lib/usb-pause-arduino"]
+	path = zumo/lib/usb-pause-arduino
+	url = https://github.com/pololu/usb-pause-arduino
+[submodule "zumo/lib/pololu-buzzer-arduino"]
+	path = zumo/lib/pololu-buzzer-arduino
+	url = https://github.com/pololu/pololu-buzzer-arduino
+[submodule "zumo/lib/pololu-hd44780-arduino"]
+	path = zumo/lib/pololu-hd44780-arduino
+	url = https://github.com/pololu/pololu-hd44780-arduino
+[submodule "zumo/lib/pololu-menu-arduino"]
+	path = zumo/lib/pololu-menu-arduino
+	url = https://github.com/pololu/pololu-menu-arduino
+[submodule "zumo/lib/pololu-oled-arduino"]
+	path = zumo/lib/pololu-oled-arduino
+	url = https://github.com/pololu/pololu-oled-arduino
