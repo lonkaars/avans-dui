@@ -1,0 +1,5 @@
+main
+*.o
+*.hex
+compile_commands.json
+.cache
