@@ -28,13 +28,13 @@ MAKEFLAGS += -j4
 all: $(TARGET).hex
 
 %.o: %.cpp
-	$(C++) -c $(CFLAGS) $< -o $@
+	$(C++) $(CFLAGS) -o $@ -c $<
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(TARGET): $(OBJS)
-	$(LD) $^ $(LFLAGS) -o $@
+	$(LD) $(LFLAGS) -o $@ $^
 
 $(TARGET).hex: $(TARGET)
 	avr-objcopy -R .eeprom -O ihex $< $@
