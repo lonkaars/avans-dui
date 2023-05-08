@@ -1,6 +1,13 @@
+
+# List of abriviations
+
+- ROI (aRea Of Interest)
+
+
+
 # The traffic sign problem:
 
-We divide the reviewed detection methods into five main categories: color-based methods, shape-based methods, color- and shape-based methods, machine-learning-based methods, and LIDAR-based methods
+<!-- We divide the reviewed detection methods into five main categories: color-based methods, shape-based methods, color- and shape-based methods, machine-learning-based methods, and LIDAR-based methods -->
 
 # Traffic Sign Detection (TSD)
 
@@ -80,23 +87,29 @@ The above described methods where also applied to a database in order to compare
 Common standard shapes of traffic signs are triangle, circle, rectangle, and octagon. Shape characteristics used for shape detection include standard shapes, boundaries, texture, key points, etc.
 
 ### Hough
+<!-- TODO: no info found -->
 
 
-
-### Barnes *et al* (fast radial symmetry)
+### Barnes *Fang et al* (fast radial symmetry)
+Seemingly a 'simpler' method 
+<!-- TODO: (currently no great references found) -->
 
 
 ### Fourier
+This method also deals with occlusion and morphing the shape flat again (when looking at it at an angle).
 
 
 ### Key points detection
-
+This, simply put, looks at the edges/corners in order to find an ROI.
 
 ## Color & Shape based
+In some methods, the shape detection methods can be combined with color based methods to fulfill the traffic sign detection work.
+
+For example, using a color based detection to find a ROI and using shape detection in that ROI to determine if it is a sign.
 
 
 ## Neural networks
-
+<!-- TODO: -->
 
 
 # Traffic Sign Recognition (TSR)
