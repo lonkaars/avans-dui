@@ -1,3 +1,5 @@
+# Introduction
+
 # Problem statement
 
 The following is the original project description (translated to English):
@@ -11,7 +13,11 @@ The following is the original project description (translated to English):
 > concept. The cart does not need to drive fast, so the image processing does
 > not need to be very fast. Assume one frame per second (or faster).
 
-# TBD: The big question
+# Specifications
+
+# Architecture
+
+# Research
 
 ## Communication between the Nicla and Zumo
 
@@ -89,6 +95,6 @@ nog niet}.
 }
 \communicationConclusion
 
-## Conclusion
+# Conclusion
 
 \communicationConclusion
