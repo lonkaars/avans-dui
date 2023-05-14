@@ -2,6 +2,9 @@
 
 #include "protocol.h"
 
+#define DUI_SPEED_MOD 96.0f
+#define DUI_MOTOR_DIFF 0.6f
+
 #define DUI_CMD_NULL 0x00
 #define DUI_CMD_SIGN_START 0x01
 #define DUI_CMD_SIGN_END 0x0f
@@ -22,9 +25,8 @@ void handle_cmd(unsigned char cmd, dui_state_t *state) {
 }
 
 void apply_state(dui_state_t *state) {
-	const float MAX_MOTOR_DIFF = 0.6f; // 0 to 1
-	float motor_l = 0.5f * state->speed * (+1.f * state->steer * MAX_MOTOR_DIFF - MAX_MOTOR_DIFF + 2) * state->speed_mod;
-	float motor_r = 0.5f * state->speed * (-1.f * state->steer * MAX_MOTOR_DIFF - MAX_MOTOR_DIFF + 2) * state->speed_mod;
+	float motor_l = 0.5f * state->speed * (+1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
+	float motor_r = 0.5f * state->speed * (-1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
 
 	Zumo32U4Motors::setLeftSpeed((int16_t) motor_l);
 	Zumo32U4Motors::setRightSpeed((int16_t) motor_r);
