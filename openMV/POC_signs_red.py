@@ -22,27 +22,52 @@ while(True):
     clock.tick()                    # Update the FPS clock.
     img = sensor.snapshot()         # Take a picture and return the image.
 
-    #lines = img.find_lines()
-    #for i in lines:
-        #img.draw_line(i.line(), 255, 8)
+    ThR = 0
+    ThG = 255
+    ThB = 128
+    threshold_r = [(ThR,255,0,255,255,ThG)]
 
-    #gray = img
-    #gray.to_grayscale()
-    #img.find_edges(0)
+    #Red
+    #if(R >= ThR and G <= thG)
+
+    #Blue
+    #if(B >= thB)
 
 
-
-    blobs = img.find_blobs(threshold_rgb)
+    blobs_r = img.find_blobs([(0, 100, 25, 63, -128, 127)])
+    blobs_b = img.find_blobs([(0, 29, 11, -128, -31, -5)])
     #blobs.count()
     #print(blobs)
     ##kpts = img.find_keypoints()
-    for index, b in enumerate(blobs, 1):
-        convex = b.convexity()
-        if convex < 0.8:
-            img.draw_rectangle(b.rect(),int((512+256)*convex),2)
-        print(b.convexity())
 
-    #img.draw_line(12,12,200,200,255,8)
+    print(f"old: { len(blobs_r) + len(blobs_b) }")
 
-    print(clock.fps())              # Note: OpenMV Cam runs about half as fast when connected
-                                    # to the IDE. The FPS should increase once disconnected.
+    blobs_r[:] = [b for b in blobs_r if (b.convexity() < 0.7 and b.area() > 64)]
+    blobs_b[:] = [b for b in blobs_b if (b.convexity() < 0.7 and b.area() > 64)]
+
+    print(f"new: { len(blobs_r) + len(blobs_b) }")
+
+    #for index, b in enumerate(blobs_r):
+        #convex = b.convexity()
+        #roundn = b.roundness()
+        #if convex < 0.8:
+            #img.draw_rectangle(b.rect(),[255,int((256)*roundn),0],2)
+            #print(index)
+        #else:
+            #del blobs_r[index]
+            #img.draw_rectangle(b.rect(),[128,128,128],4)
+
+    for index, b in enumerate(blobs_r):
+        roundn = b.roundness()
+        img.draw_rectangle(b.rect(),[255,int((256)*roundn),0],2)
+        #print(index)
+
+    for index, b in enumerate(blobs_b):
+        roundn = b.roundness()
+        img.draw_rectangle(b.rect(),[0,int((256)*roundn),255],2)
+
+
+    # Note: OpenMV Cam runs about half as fast when connected
+    # to the IDE. The FPS should increase once disconnected.
+
+    print("EOC")
