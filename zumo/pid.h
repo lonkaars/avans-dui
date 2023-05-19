@@ -11,7 +11,7 @@ private:
 	const float N = 10.0;
 
 public:
-	PID(float P, float I, float D);
+	PID(float P = -0.02, float I = 0.13, float D = -300.0);
 	float iter(float target);
 	void reset(float value);
 };

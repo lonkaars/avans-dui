@@ -41,13 +41,12 @@ void PID::reset(float value) {
 	output = value;
 }
 
-PID speed_pid(0.1, 0.0, 0.0); // TODO: tune these (garbage values)
-PID steer_pid(0.1, 0.0, 0.0);
-PID speed_mod_pid(1, 1, 1);
+PID speed_pid = PID();
+PID steer_pid = PID();
+PID speed_mod_pid = PID();
 void apply_pid(dui_state_t* target, dui_state_t* current) {
 	current->speed = speed_pid.iter(target->speed);
 	current->steer = steer_pid.iter(target->steer);
-	// current->speed_mod = speed_mod_pid.iter(current->speed_mod, target->speed_mod);
-	current->speed_mod = target->speed_mod;
+	current->speed_mod = speed_mod_pid.iter(target->speed_mod);
 }
 
