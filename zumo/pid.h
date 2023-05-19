@@ -4,10 +4,11 @@
 
 class PID {
 private:
-	float A0, A1, A2;
-	float error[3] = {0};
-	float dt = 0.010;
-	float output = 0;
+	float A0, A1, A0d, A1d, A2d, tau, alpha, d0, d1, fd0, fd1;
+	float error[3];
+	float output;
+	const float dt = 1.0;
+	const float N = 10.0;
 
 public:
 	PID(float P, float I, float D);
