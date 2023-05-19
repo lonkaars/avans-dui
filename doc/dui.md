@@ -17,6 +17,95 @@ The following is the original project description (translated to English):
 
 # Architecture
 
+## Nicla/Zumo communication protocol
+
+The communication protocol used to control the Zumo from the Nicla uses UART to
+send ranged numbers in a single byte. Figure \ref{tab:protocol-ranges} shows
+which number ranges correspond to which controls.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{rl}
+\toprule
+\textbf{Description} & \textbf{Range (inclusive)}\\
+\midrule
+(unused) & \texttt{0x00}\\
+Signs & \texttt{0x01} - \texttt{0x0f}\\
+Speed & \texttt{0x10} - \texttt{0x1f}\\
+Steering & \texttt{0x20} - \texttt{0xff}\\
+\bottomrule
+\end{tabular}
+\caption{Protocol command ranges}
+\label{tab:protocol-ranges}
+\end{figure}
+
+### Signs
+
+The Zumo stores the last sign received, and displays it's name on the OLED
+display using the lookup table in figure \ref{tab:protocol-signs}. The sign ID
+is calculated by subtracting the start offset of the sign command range from
+the command as shown in figure \ref{tab:protocol-ranges}.
+
+\begin{figure}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{ID} & \textbf{Name}\\
+\midrule
+\texttt{0x00} & (clear sign)\\
+\texttt{0x01} & Stop sign\\
+\texttt{0x02} & Turn left\\
+\texttt{0x03} & Turn right\\
+\texttt{0x04} & Low speed limit\\
+\texttt{0x05} & High speed limit\\
+\texttt{0x06} & Traffic light (red)\\
+\texttt{0x07} & Traffic light (orange)\\
+\texttt{0x08} & Traffic light (green)\\
+\bottomrule
+\end{tabular}
+\caption{Sign lookup table}
+\label{tab:protocol-signs}
+\end{figure}
+
+### Speed
+
+The speed value ranges from \num{0} to \num{1}, and is converted from the
+command using the following formula:
+
+$$ v(n) = \frac{n - 16}{15} $$
+
+### Steering
+
+The steering value is similar to the speed value, but ranges from \num{-1}
+(left) to \num{1} (right). The zumo has a built in "influence" value, which
+limits the smallest radius the robot can turn at. The steering value is
+converted using the following formula:
+
+$$ s(n) = \frac{n - 32}{223}\cdot2-1 $$
+
+## Zumo internal motor control functions
+
+The Zumo robot receives a speed and steering value. Because the protocol has a
+limited precision due to the low amount of data sent, the following formula is
+used to control motor speeds $M_1$ and $M_2$ from steering value $s$ and speed
+value $v$. The constant $C_1$ is used to globally limit the speed the robot can
+drive at. $C_2$ represents the amount of influence the steering value has on
+the corner radius, where \num{0} is no steering at all and \num{1} completely
+turns of one motor when steering fully left or right:
+
+$$ M_{1,2} = \frac{v(\pm s C_2 - C_2 + 2)}{2} C_1 $$
+
+By default, $C_1 = \num{96}$ and $C_2 = \num{0.6}$
+
+The Zumo firmware also smooths incoming values for $s$ and $v$ using a PID
+controller. The default constants for the PID controller used are:
+
+\begin{align*}
+K_p &= -0.02\\
+K_i &= +0.13\\
+K_d &= -300.0
+\end{align*}
+
 # Research
 
 ## Communication between the Nicla and Zumo
@@ -75,7 +164,7 @@ values without interpolation would lead to a garbage-in-garbage-out system. The
 simplest solution to motion blur is limiting the maximum speed the Zumo robot
 can drive at, which is the solution we're going to use as speed is not one of
 the criteria of the complete system\footnote{Problem statement
-(\ref{problem-statement})}.
+(section \ref{problem-statement})}.
 
 In the case the Nicla module crashes or fails to detect the road or roadsigns,
 it will stop sending commands. If the Zumo robot would naively continue at it's
@@ -86,7 +175,7 @@ module is able to process at about 10 frames per second, so 2 seconds is a
 reasonable time-out period.
 
 \def\communicationConclusion{
-The complete protocol will consist of single byte commands. A byte can either
+The complete protocol consists of single byte commands. A byte can either
 change the cart speed or steering direction, both will apply gradually. When no
 commands have been received for more than 2 seconds, the Zumo robot will
 gradually slow down until it is stopped. Exact specifications of commands are
