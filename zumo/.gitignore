@@ -3,3 +3,4 @@ main
 *.hex
 compile_commands.json
 .cache
+pidtest
