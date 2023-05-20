@@ -1,0 +1,56 @@
+\documentclass[11pt, a4paper, english]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{float}
+\usepackage{babel}
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{csquotes}
+\usepackage{unicode-math}
+\usepackage{fontspec}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{needspace}
+\usepackage{hyperref}
+% \usepackage[backend=biber,
+% 	bibencoding=utf8,
+% 	style=apa
+% ]{biblatex}
+
+\setmainfont{TeX Gyre Schola}
+\setmathfont{TeX Gyre Schola Math}
+\sisetup{
+	group-separator = {.},
+	output-decimal-marker = {,}
+}
+
+\bigskipamount=7mm
+\medskipamount=4mm
+% \parindent=0mm
+\parskip=1ex
+
+\def\tightlist{}
+
+\title{\doctitle}
+\author{
+	Bjorn Martens\\2187272
+	\and
+	Joshua Regnier\\2183008
+	\and
+	Loek Le Blansch\\2180996
+	\and
+	Niels Stunnebrink\\2184532
+}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\input{\jobname.md.tex}
+\end{document}
+
