@@ -286,7 +286,7 @@ All the above algorithms could be used with OpenCV, But the Radon transform need
 
 In order to make the Zumo robot both detect where it is on a road, and steer to
 keep driving on said road, some sort of communication needs to exist between
-the Nicla and Zumo. As mentioned earlier\footnote{dit is nog niet benoemd}, all
+the Nicla and Zumo. As mentioned in section \ref{distribution-of-features}, all
 machine vision-related tasks will happen on the Nicla board. Because the Nicla
 board is the first to know how much to steer the cart, it makes sense to have
 it control the cart by giving the Nicla a 'steering wheel' of sorts.
@@ -353,8 +353,8 @@ The complete protocol consists of single byte commands. A byte can either
 change the cart speed or steering direction, both will apply gradually. When no
 commands have been received for more than 2 seconds, the Zumo robot will
 gradually slow down until it is stopped. Exact specifications of commands are
-provided in the protocol specification document\footnote{dit document bestaat
-nog niet}.
+provided in the protocol specification in section
+\ref{niclazumo-communication-protocol}.
 }
 \communicationConclusion
 
