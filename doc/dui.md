@@ -186,101 +186,101 @@ K_d &= -300.0
 
 ## Detecting lines
 
-The Zumo robot needs to drive in a road map-like environment where it needs to act like a car. With the nicla vision camera, there needs to be a way for detecting lines in every frame to make the Zumo robot ride between the lines. Read lines from an image there are different algorithms to make it work. We need to make sure that it works on the OpenMV program if we only choose this one. In this research, two techniques are researched: convolution-based and feature-based. 
+The Zumo robot needs to drive in a road map-like environment where it needs to act like a car. With the nicla vision camera, there needs to be a way for detecting lines in every frame to make the Zumo robot ride between the lines. Read lines from an image there are different algorithms to make it work. We need to make sure that it works on the OpenMV program if we only choose this one. In this research, two techniques are researched: convolution-based and feature-based.
 
-### Different line detection algorithms. 
+### Different line detection algorithms.
 
-#### Hough Transform 
+#### Hough Transform
 
-This is a popular algorithm used to detect straight lines in an image. It works by transforming the image from Cartesian space to Hough space, where lines are represented as points. The algorithm then looks for clusters of points in Hough space, which correspond to lines in Cartesian space. 
+This is a popular algorithm used to detect straight lines in an image. It works by transforming the image from Cartesian space to Hough space, where lines are represented as points. The algorithm then looks for clusters of points in Hough space, which correspond to lines in Cartesian space.
 
-For more information about Hough Transform algorithms check the below links: 
+For more information about Hough Transform algorithms check the below links:
 
-- [Wiki hough](https://en.wikipedia.org/wiki/Hough_transform  ) 
-- [Science article](https://www.sciencedirect.com/topics/computer-science/hough-transforms) 
-- [OpenCV Hough](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html) 
-- [OpenMV find_lines](https://docs.openmv.io/library/omv.image.html) 
+- [Wiki hough](https://en.wikipedia.org/wiki/Hough_transform  )
+- [Science article](https://www.sciencedirect.com/topics/computer-science/hough-transforms)
+- [OpenCV Hough](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html)
+- [OpenMV find_lines](https://docs.openmv.io/library/omv.image.html)
 
-#### EDlines 
+#### EDlines
 
-EDLines, short for Edge Drawing Lines, is a feature-based algorithm that detects straight lines in an image by tracing along the edges of the image. It works by first extracting edges from the image, then building a graph where each edge is represented by a node. The algorithm then uses a greedy strategy to connect the nodes with high edge strength to form line segments. Finally, it merges line segments that are collinear and close to each other to form longer lines. This algorithm does not require a parameter search or optimization and is known for its robustness against noise and partial occlusion. 
+EDLines, short for Edge Drawing Lines, is a feature-based algorithm that detects straight lines in an image by tracing along the edges of the image. It works by first extracting edges from the image, then building a graph where each edge is represented by a node. The algorithm then uses a greedy strategy to connect the nodes with high edge strength to form line segments. Finally, it merges line segments that are collinear and close to each other to form longer lines. This algorithm does not require a parameter search or optimization and is known for its robustness against noise and partial occlusion.
 
-For more information about EDlines algorithms check the below links: 
+For more information about EDlines algorithms check the below links:
 
-- [github library](https://github.com/CihanTopal/ED_Lib) 
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772) 
-- [EDLINES: REAL-TIME LINE SEGMENT DETECTION BY EDGE DRAWING (ED)](https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICIP-2011/papers/1569406487.pdf) 
-- [OpenCV EDlines doc](https://docs.opencv.org/3.4/d4/d8b/group__ximgproc__edge__drawing.html) 
+- [github library](https://github.com/CihanTopal/ED_Lib)
+- [Science article](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772)
+- [EDLINES: REAL-TIME LINE SEGMENT DETECTION BY EDGE DRAWING (ED)](https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICIP-2011/papers/1569406487.pdf)
+- [OpenCV EDlines doc](https://docs.opencv.org/3.4/d4/d8b/group__ximgproc__edge__drawing.html)
 
-#### Line Segment Detector 
+#### Line Segment Detector
 
-LSD (Line Segment Detector) is an algorithm used for detecting line segments in an image. It works by analyzing the gradient information in the image and clustering nearby gradients that form a line segment. The algorithm first computes the gradient information for the image using the Gaussian filter. It then performs a series of operations, such as non-maximum suppression and thresholding, to obtain a binary edge map. 
+LSD (Line Segment Detector) is an algorithm used for detecting line segments in an image. It works by analyzing the gradient information in the image and clustering nearby gradients that form a line segment. The algorithm first computes the gradient information for the image using the Gaussian filter. It then performs a series of operations, such as non-maximum suppression and thresholding, to obtain a binary edge map.
 
-The line segments are detected by applying a series of geometric constraints to the edge map. These constraints include the minimum and maximum length of line segments, the minimum angle between line segments, and the maximum deviation of line segments from a straight line. 
+The line segments are detected by applying a series of geometric constraints to the edge map. These constraints include the minimum and maximum length of line segments, the minimum angle between line segments, and the maximum deviation of line segments from a straight line.
 
-Once the line segments are detected, they are refined using a line merging algorithm combining nearby line segments into longer, more continuous lines. The resulting line segments and their endpoints are returned as the output of the algorithm. 
+Once the line segments are detected, they are refined using a line merging algorithm combining nearby line segments into longer, more continuous lines. The resulting line segments and their endpoints are returned as the output of the algorithm.
 
-For more information about Line Segment Detector algorithms check the below links: 
+For more information about Line Segment Detector algorithms check the below links:
 
-- [LSD: a Line Segment Detector pdf](http://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf) 
-- [Working behind LSD](https://saiwa.ai/blog/line-segment-detection-2/) 
-- [OpenCV LSD doc](https://docs.opencv.org/3.4/db/d73/classcv_1_1LineSegmentDetector.html) 
-- [OpenMV find_line_segments](https://docs.openmv.io/library/omv.image.html) 
+- [LSD: a Line Segment Detector pdf](http://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf)
+- [Working behind LSD](https://saiwa.ai/blog/line-segment-detection-2/)
+- [OpenCV LSD doc](https://docs.opencv.org/3.4/db/d73/classcv_1_1LineSegmentDetector.html)
+- [OpenMV find_line_segments](https://docs.openmv.io/library/omv.image.html)
 
-#### Radon transform 
+#### Radon transform
 
-Radon transform is another popular algorithm used for line detection. It works by computing the line integral of an image along different directions. The algorithm rotates the image at different angles and computes the sum of pixel intensities along each line in the image. The result is a two-dimensional matrix called the Radon transform. Peaks in this matrix correspond to the lines in the original image. The algorithm then applies some post-processing steps to identify and extract the lines from the Radon transform. 
+Radon transform is another popular algorithm used for line detection. It works by computing the line integral of an image along different directions. The algorithm rotates the image at different angles and computes the sum of pixel intensities along each line in the image. The result is a two-dimensional matrix called the Radon transform. Peaks in this matrix correspond to the lines in the original image. The algorithm then applies some post-processing steps to identify and extract the lines from the Radon transform.
 
-For more information about Radon transform algorithms check the below links: 
+For more information about Radon transform algorithms check the below links:
 
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/0031320396000155) 
-- [matlab Radon](https://stackoverflow.com/questions/35412573/radon-transform-line-detection) 
-- [Matlab elaboration Radon](https://www.kevinpolisano.com/Doctorat/doc-matlab-exemple/radon_lines_detection.html) 
-- [OpenCV Radon doc](https://docs.opencv.org/4.x/d5/d89/radon__transform_8hpp.html) 
+- [Science article](https://www.sciencedirect.com/science/article/abs/pii/0031320396000155)
+- [matlab Radon](https://stackoverflow.com/questions/35412573/radon-transform-line-detection)
+- [Matlab elaboration Radon](https://www.kevinpolisano.com/Doctorat/doc-matlab-exemple/radon_lines_detection.html)
+- [OpenCV Radon doc](https://docs.opencv.org/4.x/d5/d89/radon__transform_8hpp.html)
 
-### Which algorithm is suitable for our project? 
+### Which algorithm is suitable for our project?
 
-We have identified four different types of line detection algorithms that could potentially be used for our project. To decide on the best algorithm, we need to consider various factors such as accuracy, efficiency, and ease of use. While processing time is not a critical factor in our case, we need to ensure that the algorithm we choose meets our requirements and is accessible through the platform we are using, which is currently openMV but may change to openCV in the future. Therefore, our priority is to select an algorithm that is easy to implement, provides accurate results, and is compatible with our platform. 
+We have identified four different types of line detection algorithms that could potentially be used for our project. To decide on the best algorithm, we need to consider various factors such as accuracy, efficiency, and ease of use. While processing time is not a critical factor in our case, we need to ensure that the algorithm we choose meets our requirements and is accessible through the platform we are using, which is currently openMV but may change to openCV in the future. Therefore, our priority is to select an algorithm that is easy to implement, provides accurate results, and is compatible with our platform.
 
-#### OpenMV 
+#### OpenMV
 
-The only two algorithms that work with OpenMV are Hough Transform, the function find_lines, and Line Segment Detector, also known as find_line_segments. Both of these have their ups and downs and could be used for our project. find_lines has the most ups whereas find_line_segemtns has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it. 
+The only two algorithms that work with OpenMV are Hough Transform, the function find_lines, and Line Segment Detector, also known as find_line_segments. Both of these have their ups and downs and could be used for our project. find_lines has the most ups whereas find_line_segemtns has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it.
 
-For the test are the straight lines pictures used with different lighting additionality the left lane represents a whitish line and the right lane is drawn with a more darker color. here below are the pictures used: 
+For the test are the straight lines pictures used with different lighting additionality the left lane represents a whitish line and the right lane is drawn with a more darker color. here below are the pictures used:
 
-![picture 1](../RealTime_pictures/rtstraightLines.class/00000.jpg) 
+![picture 1](../RealTime_pictures/rtStraightLines.class/00000.jpg)
 
-![picture 2](../RealTime_pictures/rtStraightLines.class/00018.jpg) 
+![picture 2](../RealTime_pictures/rtStraightLines.class/00018.jpg)
 
-##### find_lines 
+##### find_lines
 
-The find_lines is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters. 
+The find_lines is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters.
 
-This is the outcome of picture 1: 
-![outcome_picture_1](./assets/hough_straightLines_Pic_0.bmp) 
+This is the outcome of picture 1:
+![outcome_picture_1](../assets/hough_straightLines_Pic_0.png)
 
-This is the outcome of picture 2: 
-![outcome_picture_2](./assets/hough_straightLines_Pic_1.bmp) 
+This is the outcome of picture 2:
+![outcome_picture_2](../assets/hough_straightLines_Pic_1.png)
 
-As you can see there isn't much of a difference between the two pictures. 
+As you can see there isn't much of a difference between the two pictures.
 
-##### find_line_segments 
+##### find_line_segments
 
-The find_line_segments is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory. 
+The find_line_segments is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory.
 
-This is the outcome of picture 1: 
+This is the outcome of picture 1:
 
-![outcome_picture_1](./assets/LSD_straightLines_Pic_0.bmp.bmp) 
+![outcome_picture_1](../assets/LSD_straightLines_Pic_0.png)
 
-This is the outcome of picture 2: 
+This is the outcome of picture 2:
 
-![outcome_picture_2](./assets/LSD_straightLines_Pic_1.bmp.bmp) 
+![outcome_picture_2](../assets/LSD_straightLines_Pic_1.png)
 
-As you can see there is quite a lot of difference between them. This function needs more refinement but I couldn't find the sweet spot. Also, the right line in different pictures was always the problem, so there needs another solution for this function to work better. 
+As you can see there is quite a lot of difference between them. This function needs more refinement but I couldn't find the sweet spot. Also, the right line in different pictures was always the problem, so there needs another solution for this function to work better.
 
-#### OpenCV 
+#### OpenCV
 
-All the above algorithms could be used with OpenCV, But the Radon transform needs more work than the others with the amount of information in the doc. 
+All the above algorithms could be used with OpenCV, But the Radon transform needs more work than the others with the amount of information in the doc.
 
 ## Communication between the Nicla and Zumo
 
