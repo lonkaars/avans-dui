@@ -1,29 +1,105 @@
 # Introduction
 
+\<inleiding iemand?\>
+
 # Problem statement
 
-The following is the original project description (translated to English):
+The following is the original project description (translated to English).
+References have been added in superscript that link to requirements set in
+section \ref{specifications}.
 
-> I would like to bring to market a vehicle that can drive independently from A
-> to B. The vehicle must take into account traffic rules, road signs, traffic
-> lights, etc. Research is being conducted using a small cart, the Pololu Zumo
-> 32U4, on which a camera module Nicla Vision is mounted. The aim is to
-> investigate the most appropriate method of recognizing the road, traffic
-> signs and traffic lights. This should be demonstrated with a proof of
-> concept. The cart does not need to drive fast, so the image processing does
-> not need to be very fast. Assume one frame per second (or faster).
+> I would like to bring to market a vehicle that can drive
+> independently\req{autonomous} from A to B. The vehicle must take into account
+> traffic rules\req{traffic-rules}, road signs\req{signs}, traffic
+> lights\req{traffic-lights}, etc. Research is being conducted using a small
+> cart, the Pololu Zumo 32U4\req{zumo}, on which a camera module Nicla
+> Vision\req{nicla} is mounted. The aim is to investigate the most appropriate
+> method of recognizing the road, traffic signs and traffic lights. This should
+> be demonstrated with a proof of concept. The cart does not need to drive
+> fast\req{drspeed}, so the image processing\req{mvision} does not need to be
+> very fast. Assume one frame per second (or faster)\req{imspeed}.
 
 # Specifications
 
+The following is a list of specifications derived from the original project
+description in section \ref{problem-statement}.
+
+\begin{enumerate}
+  \item \label{req:autonomous}
+    The vehicle is autonomous
+  \item
+    The vehicle can detect how its positioned and orientated relative to a road
+  \item \label{req:traffic-rules}
+    The vehicle conforms to the following set of traffic rules
+  \begin{enumerate}
+    \item Driving when not on a road is not allowed
+    \item The vehicle can follow a road by steering itself accordingly
+    \item Driving off the road is only allowed when necessary for the camera to
+          keep seeing the road
+  \end{enumerate}
+  \item \label{req:traffic-lights}
+  The vehicle handles traffic lights in the following way
+  \begin{enumerate}
+    \item Stop at a red traffic light
+    \item Speed up at an orange traffic light
+    \item Continue driving normally at a green traffic light
+  \end{enumerate}
+  \item \label{req:signs}
+    The vehicle acts on traffic signs in the following way
+  \begin{enumerate}
+    \item Stop at a stop sign, and continue driving after a few seconds
+    \item Turn left at a left sign
+    \item Turn right at a right sign
+    \item Slow down at a low speed limit sign
+    \item Speed up to normal speed at a high speed limit sign
+  \end{enumerate}
+  \item \label{req:zumo}
+    The vehicle used is a Pololu Zumo 32U4
+  \item \label{req:nicla}
+    The camera module used is an Arduino Nicla Vision
+  \item \label{req:mvision}
+    Computer vision / image processing is used as the only input
+  \item \label{req:drspeed}
+    There is no minimum speed the car has to drive at
+  \item \label{req:imspeed}
+    The image processing pipeline runs at 1 frame per second or higher
+  \item
+    The Zumo displays the name of the last detected sign on it's OLED display
+\end{enumerate}
+
 # Architecture
+
+## Overview
+
+![Architecture overview (level 0)
+\label{fig:architecture-level-0}](../assets/architecture-level-0.pdf)
+
+Figure \ref{fig:architecture-level-0} shows the hardware used in this project.
+Both the Pololu Zumo 32U4 (referred to as just "Zumo"), and the Arduino Nicla
+Vision ("Nicla") have additional sensors and/or outputs on-board, but are
+unused.
+
+## Distribution of features
+
+Because creating a software architecture that does all machine vision-related
+tasks on the Nicla, and all driving related tasks on the Zumo would create
+significant overhead, and because the microcontroller on the Zumo is
+significantly harder to debug than the Nicla, a monolithic architecture was
+chosen. In this architecture, both the detection of 'traffic objects' and the
+decisionmaking on how to handle each object is done on the Nicla board.
+
+Figure \ref{fig:architecture-level-0} shows that a bidirectional communication
+line exists between the Zumo and Nicla. This line is only used to send control
+commands to the Zumo. Section \ref{niclazumo-communication-protocol} describes
+which commands are sent over these lines.
 
 ## Nicla/Zumo communication protocol
 
 The communication protocol used to control the Zumo from the Nicla uses UART to
-send ranged numbers in a single byte. Figure \ref{tab:protocol-ranges} shows
+send ranged numbers in a single byte. Table \ref{tab:protocol-ranges} shows
 which number ranges correspond to which controls.
 
-\begin{figure}[h]
+\begin{table}
 \centering
 \begin{tabular}{rl}
 \toprule
@@ -37,16 +113,16 @@ Steering & \texttt{0x20} - \texttt{0xff}\\
 \end{tabular}
 \caption{Protocol command ranges}
 \label{tab:protocol-ranges}
-\end{figure}
+\end{table}
 
 ### Signs
 
 The Zumo stores the last sign received, and displays it's name on the OLED
-display using the lookup table in figure \ref{tab:protocol-signs}. The sign ID
+display using the lookup table in table \ref{tab:protocol-signs}. The sign ID
 is calculated by subtracting the start offset of the sign command range from
-the command as shown in figure \ref{tab:protocol-ranges}.
+the command as shown in table \ref{tab:protocol-ranges}.
 
-\begin{figure}[h]
+\begin{table}
 \centering
 \begin{tabular}{ll}
 \toprule
@@ -65,7 +141,7 @@ the command as shown in figure \ref{tab:protocol-ranges}.
 \end{tabular}
 \caption{Sign lookup table}
 \label{tab:protocol-signs}
-\end{figure}
+\end{table}
 
 ### Speed
 
@@ -184,6 +260,32 @@ nog niet}.
 }
 \communicationConclusion
 
+## Compiling and linking code for the Zumo
+
+This section tries to answer the question "What are possible debugging options
+for code running on the Zumo robot?".
+
+Debugging running code can usually be done using an on-device debugger, and a
+program that interfaces with the debugger and gcc on a computer. Because gcc
+only gives valuable information when it has access to the executable file
+running on the microcontroller, an attempt at making a makefile-based toolchain
+was made.
+
+Pololu provides C++ libraries for controlling various parts of the Zumo's
+hardware. These libraries make use of functions and classes that are part of
+the Arduino core library. The Arduino libraries are all open source, and can in
+theory be compiled and linked using make, but this would take more effort than
+it's worth, since the Zumo has very little responsibility in the end product.
+
+\def\buildSystemConclusion{
+Because making a custom build system would take too much time, and because the
+Zumo robot's code is very simple, unit tests are used to debug the Zumo's code.
+For compiling and uploading the full Zumo firmware, the Arduino IDE is used in
+combination with the standard Pololu boards and Libraries.
+}
+\buildSystemConclusion
+
 # Conclusion
 
 \communicationConclusion
+\buildSystemConclusion

@@ -12,10 +12,13 @@
 \usepackage{booktabs}
 \usepackage{needspace}
 \usepackage{hyperref}
-% \usepackage[backend=biber,
-% 	bibencoding=utf8,
-% 	style=apa
-% ]{biblatex}
+\usepackage{graphicx}
+\usepackage[toc]{glossaries}
+\usepackage[backend=biber,
+	bibencoding=utf8,
+	style=apa
+]{biblatex}
+\addbibresource{refs.bib}
 
 \setmainfont{TeX Gyre Schola}
 \setmathfont{TeX Gyre Schola Math}
@@ -42,6 +45,13 @@
 	Niels Stunnebrink\\2184532
 }
 
+\newcommand{\req}[1]{$^{\text{\ref{req:#1}}}$}
+\newcommand{\up}[1]{$^{\text{#1}}$}
+\newcommand{\sub}[1]{$_{\text{#1}}$}
+
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+
 \begin{document}
 \begin{titlepage}
 \maketitle
@@ -52,5 +62,11 @@
 \newpage
 
 \input{\jobname.md.tex}
+
+% \printbibliography[heading=bibintoc]
+% \printglossaries
+% \listoftables
+% \listoffigures
+
 \end{document}
 

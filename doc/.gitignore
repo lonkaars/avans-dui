@@ -12,6 +12,8 @@
 *.toc
 *.synctex(busy)
 *.md.tex
+*.lof
+*.lot
 
 # ignore output files
 *.pdf
