@@ -383,6 +383,22 @@ combination with the standard Pololu boards and Libraries.
 }
 \buildSystemConclusion
 
+## Physical communication
+Bit banging: With bit banging, data is transmitted by manually manipulating the individual bits and sending them through the GPIO ports of Nicla Vision. By directly controlling the GPIO pins, the software emulates the behavior of dedicated hardware components like serial communication interfaces. By carefully adjusting the timing and logic levels of the bits, data can be effectively transmitted to the Zumo.
+
+UART: The second option is to utilize UART for communication between Nicla Vision and Zumo. UART provides a convenient way to send data because Nicla Vision has a built-in capability to communicate using UART. However, there are a couple of challenges associated with this approach. Firstly, the wiring on the Zumo is not connected to a pin that can directly utilize the built-in UART library. To overcome this, the SoftwareSerial.h library can be employed, enabling software emulation of UART on alternative pins. Secondly, the hardware responsible for converting the 3.3-volt signal to a 5-volt signal for the Zumo inverts the UART signal. To address this, the code can be modified to account for the inverted signal and produce the expected output.
+
+The decision has been made to utilize UART for communication between Nicla and Zumo. This option was chosen due to the convenience of Nicla Vision's built-in UART capability. However, there are a couple of challenges associated with this approach that need to be addressed. Firstly, the wiring on the Zumo is not connected to a pin that can directly utilize the built-in UART library. To overcome this, the SoftwareSerial.h library can be employed to emulate UART using alternative pins. Secondly, the hardware responsible for converting the 3.3-volt signal to a 5-volt signal for the Zumo inverts the UART signal. Modifications to the code will be made to account for the inverted signal and produce the expected output.
+
+
+## Wireless communication
+The first option is to use an MJPEG stream. This method involves transmitting the video footage as a series of JPEG images over the HTTP protocol. However, using the HTTP protocol adds unnecessary overhead and can slow down the communication process. Working with an MJPEG stream requires decoding the individual frames and handling them appropriately.
+
+The second and more efficient option is to use a socket. With this approach, the video footage is streamed directly using the TCP protocol. By establishing a socket connection between the Nicla and the receiving device, data can be transmitted in a continuous and efficient manner. The TCP protocol offers faster and more reliable communication compared to HTTP, making it easier to work with the streamed video data.
+
+Using a socket for wireless communication allows for a more direct and streamlined approach. It eliminates the need for additional layers and protocols, enabling real-time transmission of the video feed. This method simplifies the process of receiving and processing the video data on the receiving end, resulting in a smoother and more responsive experience.
+
+
 # Conclusion
 
 \communicationConclusion
