@@ -71,8 +71,7 @@ description in section \ref{problem-statement}.
 
 ## Overview
 
-![Architecture overview (level 0)
-\label{fig:architecture-level-0}](../assets/architecture-level-0.pdf)
+![Architecture overview (level 0)](../assets/architecture-level-0.pdf){#fig:architecture-level-0}
 
 Figure \ref{fig:architecture-level-0} shows the hardware used in this project.
 Both the Pololu Zumo 32U4 (referred to as just "Zumo"), and the Arduino Nicla
@@ -494,7 +493,7 @@ Most shape based recognition methods are more complex than using a color based d
 ## Traffic Sign Recognition (TSR)
 After traffic sign detection or tracking, traffic sign recognition is performed to classify the detected traffic signs into correct classes.
 
-![signs example](../assets/signs.png)
+![signs example](../assets/signs.png){#fig:signs-example}
 
 ### Binary tree
 The binary-tree-based classification method usually classify traffic signs according to the shapes and colors in a coarse-to-fine tree process.
