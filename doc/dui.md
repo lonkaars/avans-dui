@@ -415,7 +415,10 @@ fB(i) = max(0, min(iB − iR, iB − iG)/s),
 fY(i) = max(0, min(iR − iB, iG − iB)/s).
 ```
 
-This method can result in some issues on the blue channel (see source 1 page 86583 for more explanation). As a solution to this issue use the following formula for the blue channel instead:
+This method can result in some issues on the blue channel
+\parencite[86583]{ieee:sign-detection}. As a solution to this issue use the
+following formula for the blue channel instead:
+
 ```py
 f′B(i) = max((0, iB − iR)/s).
 ```
@@ -449,7 +452,7 @@ This color space is used for finding uncorrelated color components, the L\*a\*b\
 
 This method avoids the use of fixed thresholds that might need adjusting at times. In order to resolve this some authors tried to transfer the problem into pixel classification where a neural network classifies every pixel in the input image, the pixel classification algorithms are often slower than other color extraction methods.
 
-#### results
+#### Results
 
 \def\signDetectionColor{
 The above described methods where also applied to a database in order to compare each method. This resulted in the conclusion that, using a normalized RGB space is giving the a mixture of most detections and least false-positve results. See source 1 page 86584 for the full report.
@@ -515,8 +518,4 @@ While making a binary tree is seemingly the most simple, yet effective solution.
 \signDetectionColor
 \signDetectionShape
 \signRecognition
-
-## Sources:
-
-1. [IEEE, Digital Object Identifier June 26, 2019 (pages 86578 - 86596)](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8746141)
 
