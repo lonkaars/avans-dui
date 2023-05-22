@@ -206,10 +206,10 @@ EDLines, short for Edge Drawing Lines, is a feature-based algorithm that detects
 
 For more information about EDlines algorithms check the below links:
 
-- [github library](https://github.com/CihanTopal/ED_Lib)
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772)
-- [EDLINES: REAL-TIME LINE SEGMENT DETECTION BY EDGE DRAWING (ED)](https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICIP-2011/papers/1569406487.pdf)
-- [OpenCV EDlines doc](https://docs.opencv.org/3.4/d4/d8b/group__ximgproc__edge__drawing.html)
+- \citetitle{gh:ed_lib}
+- \citetitle{sciencedirect:edlines}
+- \citetitle{paper:edlines}
+- \citetitle{opencv:edgedrawing}
 
 #### Line Segment Detector
 
@@ -221,10 +221,10 @@ Once the line segments are detected, they are refined using a line merging algor
 
 For more information about Line Segment Detector algorithms check the below links:
 
-- [LSD: a Line Segment Detector pdf](http://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf)
-- [Working behind LSD](https://saiwa.ai/blog/line-segment-detection-2/)
-- [OpenCV LSD doc](https://docs.opencv.org/3.4/db/d73/classcv_1_1LineSegmentDetector.html)
-- [OpenMV find_line_segments](https://docs.openmv.io/library/omv.image.html)
+- \citetitle{paper:lsd}
+- \citetitle{saiwa:lsd}
+- \citetitle{opencv:lsd}
+- \citetitle{openmv:lsd}
 
 #### Radon transform
 
@@ -232,10 +232,10 @@ Radon transform is another popular algorithm used for line detection. It works b
 
 For more information about Radon transform algorithms check the below links:
 
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/0031320396000155)
-- [matlab Radon](https://stackoverflow.com/questions/35412573/radon-transform-line-detection)
-- [Matlab elaboration Radon](https://www.kevinpolisano.com/Doctorat/doc-matlab-exemple/radon_lines_detection.html)
-- [OpenCV Radon doc](https://docs.opencv.org/4.x/d5/d89/radon__transform_8hpp.html)
+- \citetitle{sciencedirect:radon}
+- \citetitle{stackoverflow:radon}
+- \citetitle{matlab:radon}
+- \citetitle{opencv:radon}
 
 ### Which algorithm is suitable for our project?
 
