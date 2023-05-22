@@ -494,7 +494,7 @@ Most shape based recognition methods are more complex than using a color based d
 ## Traffic Sign Recognition (TSR)
 After traffic sign detection or tracking, traffic sign recognition is performed to classify the detected traffic signs into correct classes.
 
-![signs example](img/signs.png)
+![signs example](../assets/signs.png)
 
 ### Binary tree
 The binary-tree-based classification method usually classify traffic signs according to the shapes and colors in a coarse-to-fine tree process.
