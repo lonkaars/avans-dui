@@ -195,10 +195,10 @@ This is a popular algorithm used to detect straight lines in an image. It works 
 
 For more information about Hough Transform algorithms check the below links:
 
-- [Wiki hough](https://en.wikipedia.org/wiki/Hough_transform  )
-- [Science article](https://www.sciencedirect.com/topics/computer-science/hough-transforms)
-- [OpenCV Hough](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html)
-- [OpenMV find_lines](https://docs.openmv.io/library/omv.image.html)
+- \citetitle{wikipedia:hough}
+- \citetitle{sciencedirect:hough}
+- \citetitle{opencv:hough}
+- \citetitle{openmv:find_lines}
 
 #### EDlines
 
