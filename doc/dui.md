@@ -243,7 +243,7 @@ We have identified four different types of line detection algorithms that could 
 
 #### OpenMV
 
-The only two algorithms that work with OpenMV are Hough Transform, the function find_lines, and Line Segment Detector, also known as find_line_segments. Both of these have their ups and downs and could be used for our project. find_lines has the most ups whereas find_line_segemtns has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it.
+The only two algorithms that work with OpenMV are Hough Transform, the function `find_lines`, and Line Segment Detector, also known as `find_line_segments`. Both of these have their ups and downs and could be used for our project. `find_lines` has the most ups whereas `find_line_segments` has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it.
 
 For the test are the straight lines pictures used with different lighting additionality the left lane represents a whitish line and the right lane is drawn with a more darker color. here below are the pictures used:
 
@@ -251,9 +251,9 @@ For the test are the straight lines pictures used with different lighting additi
 
 ![picture 2](../RealTime_pictures/rtStraightLines.class/00018.jpg)
 
-##### find_lines
+##### `find_lines`
 
-The find_lines is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters.
+The `find_lines` is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters.
 
 This is the outcome of picture 1:
 ![outcome_picture_1](../assets/hough_straightLines_Pic_0.png)
@@ -263,9 +263,9 @@ This is the outcome of picture 2:
 
 As you can see there isn't much of a difference between the two pictures.
 
-##### find_line_segments
+##### `find_line_segments`
 
-The find_line_segments is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory.
+The `find_line_segments` is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory.
 
 This is the outcome of picture 1:
 
@@ -394,6 +394,7 @@ The distinct color characteristics of traffic signs can attract drivers’ atten
 
 One can easily look at the RGB values to detect a certain color. Although the r,g and b values are heavily effected by different illuminations, therefore this isn't a reliable solution in variating lighting conditions.
 
+\needspace{5cm}
 An example implementation: 
 
 ```py
@@ -407,6 +408,7 @@ if(B >= thB)
 if((R + G) >= ThY)
 ```
 
+\needspace{4cm}
 It is possible to enhance the colors with maximum and minimum operations:
 
 ```py
@@ -415,16 +417,18 @@ fB(i) = max(0, min(iB − iR, iB − iG)/s),
 fY(i) = max(0, min(iR − iB, iG − iB)/s).
 ```
 
+\needspace{2cm}
 This method can result in some issues on the blue channel
-\parencite[86583]{ieee:sign-detection}. As a solution to this issue use the
+\footcite[86583]{ieee:sign-detection}. As a solution to this issue use the
 following formula for the blue channel instead:
 
 ```py
-f′B(i) = max((0, iB − iR)/s).
+_fB(i) = max((0, iB − iR)/s).
 ```
 
 #### HSV
 
+\needspace{6cm}
 The HSV/HSI color space is more immune to the illumination challenges of RGB. The hue and saturation channels can be calculated using RGB, which increases the processing time.
 The following pseudo code shows how to detect the red, blue and yellow colors in this space.
 
@@ -452,12 +456,13 @@ This color space is used for finding uncorrelated color components, the L\*a\*b\
 
 This method avoids the use of fixed thresholds that might need adjusting at times. In order to resolve this some authors tried to transfer the problem into pixel classification where a neural network classifies every pixel in the input image, the pixel classification algorithms are often slower than other color extraction methods.
 
-#### Results
-
-\def\signDetectionColor{
-The above described methods where also applied to a database in order to compare each method. This resulted in the conclusion that, using a normalized RGB space is giving the a mixture of most detections and least false-positve results. See source 1 page 86584 for the full report.
+\def\signDetectionColorConclusion{
+All color-based detection methods where also applied to a database in order to
+compare each method. Experiments concluded that using a normalized RGB space is
+giving the a mixture of most detections and least false-positve
+results\footcite{ieee:sign-detection}.
 }
-\signDetectionColor
+\signDetectionColorConclusion
 
 ### Shape based
 
@@ -486,12 +491,12 @@ For example, using a color based detection to find a ROI and using shape detecti
 ### Neural networks
 <!-- TODO: -->
 
-### results
-
-\def\signDetectionShape{
-Most shape based recognition methods are more complex than using a color based detection. But the method 'Fourier' seems the most useful as it can also deal with rotated and occluded objects. 
+\def\signDetectionShapeConclusion{
+Most shape based recognition methods are more complex than using a color based
+detection. But the method `Fourier' seems the most useful as it can also deal
+with rotated and occluded objects. 
 }
-\signDetectionShape
+\signDetectionShapeConclusion
 
 ## Traffic Sign Recognition (TSR)
 After traffic sign detection or tracking, traffic sign recognition is performed to classify the detected traffic signs into correct classes.
@@ -504,18 +509,18 @@ The binary-tree-based classification method usually classify traffic signs accor
 ### Support Vector Machine (SVM)
 As a binary-classification method, SVM classifies traffic signs using one-vs-one or one-vs-others classification process.
 
-## results
-
-\def\signRecognition{
-While making a binary tree is seemingly the most simple, yet effective solution. Using the 'Fourier' method is a bit more complex, it may be a better solution (this requires testing).
+\def\signRecognitionConclusion{
+While making a binary tree is seemingly the most simple, yet effective
+solution. Using the `Fourier' method is a bit more complex, it may be a better
+solution (this requires testing).
 }
-\signRecognition
+\signRecognitionConclusion
 
 # Conclusion
 
 \communicationConclusion
 \buildSystemConclusion
-\signDetectionColor
-\signDetectionShape
-\signRecognition
+\signDetectionColorConclusion
+\signDetectionShapeConclusion
+\signRecognitionConclusion
 

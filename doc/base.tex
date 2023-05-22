@@ -18,8 +18,9 @@
 	bibencoding=utf8,
 	style=apa
 ]{biblatex}
-\usepackage{fancyvrb}
 \addbibresource{refs.bib}
+\usepackage{fancyvrb}
+\usepackage[nottoc]{tocbibind}
 
 \input{pandoc.tex}
 
@@ -66,10 +67,11 @@
 
 \input{\jobname.md.tex}
 
+\newpage
 \printbibliography[heading=bibintoc]
-% \printglossaries
-% \listoftables
-% \listoffigures
+\printglossaries
+\listoftables
+\listoffigures
 
 \end{document}
 
