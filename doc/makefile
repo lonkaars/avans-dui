@@ -9,7 +9,7 @@ dui.pdf: ../assets/hough_straightLines_Pic_0.png
 dui.pdf: ../assets/hough_straightLines_Pic_1.png
 
 versionctl.tex:
-	git tag -l 'doc-*' --format='%(refname:short)	%(objectname:short=7)	%(contents:subject)	%(*authordate:format:%s)' | ./versiontable.awk -F'	' > $@
+	git tag -l 'doc-*' --format='%(refname:short)	%(*objectname:short)	%(contents:subject)	%(*authordate:format:%s)' | ./versiontable.awk -F'	' > $@
 
 %.png: %.bmp
 	convert $< $@
