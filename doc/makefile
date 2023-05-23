@@ -8,13 +8,16 @@ dui.pdf: ../assets/LSD_straightLines_Pic_1.png
 dui.pdf: ../assets/hough_straightLines_Pic_0.png
 dui.pdf: ../assets/hough_straightLines_Pic_1.png
 
+versionctl.tex:
+	git tag -l 'doc-*' --format='%(refname:short)	%(objectname:short=7)	%(contents:subject)	%(*authordate:format:%s)' | ./versiontable.awk -F'	' > $@
+
 %.png: %.bmp
 	convert $< $@
 
 %.pdf: %.svg
 	rsvg-convert -f pdf -o $@ $<
 
-%.pdf: %.tex base.tex %.md.tex
+%.pdf: %.tex base.tex %.md.tex versionctl.tex
 	latexmk $< -shell-escape -halt-on-error -lualatex -f -g
 
 %.md.tex: %.md
