@@ -5,9 +5,6 @@
 #include "protocol.h"
 #include "pid.h"
 
-#define DUI_PINOUT_NICLA_TX 13
-#define DUI_PINOUT_NICLA_RX 14
-
 dui_state_t g_dui_target_state = {
 	.steer = 1.0f,
 	.speed = 1.0f,

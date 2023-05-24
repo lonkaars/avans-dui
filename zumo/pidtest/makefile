@@ -5,8 +5,8 @@ CFLAGS =
 LFLAGS =
 TARGET = pidtest
 
-SRCS := pidtest.cpp pid.cpp
-OBJS := pidtest.o pid.o
+SRCS := pidtest.cpp ../pid.cpp
+OBJS := pidtest.o ../pid.o
 
 all: pidtest
 
