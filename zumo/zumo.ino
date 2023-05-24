@@ -19,6 +19,8 @@ dui_state_t g_dui_current_state = {
 };
 
 void setup() {
+	pinMode(DUI_PINOUT_NICLA_TX, OUTPUT);
+	pinMode(DUI_PINOUT_NICLA_RX, INPUT_PULLUP);
 }
 
 void loop() {
@@ -29,6 +31,4 @@ void loop() {
 	apply_pid(&g_dui_target_state, &g_dui_current_state);
 
 	apply_state(&g_dui_current_state);
-
-	delay(10);
 }

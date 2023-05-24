@@ -1,5 +1,8 @@
 #pragma once
 
+#define DUI_PINOUT_NICLA_TX 13
+#define DUI_PINOUT_NICLA_RX 14
+
 typedef enum {
 	DUI_CMD_NULL,
 	DUI_CMD_SIGN,

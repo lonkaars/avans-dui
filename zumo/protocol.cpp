@@ -1,4 +1,6 @@
 #include <Zumo32U4Motors.h>
+#include <Arduino.h>
+#include <Wire.h>
 
 #include "protocol.h"
 
@@ -34,6 +36,20 @@ void apply_state(dui_state_t *state) {
 	// TODO: print sign on OLED screen
 }
 
+inline bool rx() { return !digitalRead(DUI_PINOUT_NICLA_RX); }
+
 unsigned char uart_read() {
-	return 0x00;
+	if (rx() == true) return 0x00; // return immediately if line is idle
+
+	delayMicroseconds(1500); // wait out start bit
+
+	unsigned char byte = 0x00;
+	for (unsigned int i = 0; i < 8; i++) {
+		byte = (byte << 1) | rx();
+		delayMicroseconds(1000);
+	}
+
+	delayMicroseconds(1000); // wait out stop bit
+
+	return byte;
 }
