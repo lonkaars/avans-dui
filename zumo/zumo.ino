@@ -5,6 +5,9 @@
 #include "protocol.h"
 #include "pid.h"
 
+#define DUI_PINOUT_NICLA_TX 13
+#define DUI_PINOUT_NICLA_RX 14
+
 dui_state_t g_dui_target_state = {
 	.steer = 1.0f,
 	.speed = 1.0f,
@@ -19,6 +22,8 @@ dui_state_t g_dui_current_state = {
 };
 
 void setup() {
+	pinMode(DUI_PINOUT_NICLA_TX, OUTPUT);
+	pinMode(DUI_PINOUT_NICLA_RX, INPUT_PULLUP);
 }
 
 void loop() {
@@ -29,6 +34,4 @@ void loop() {
 	apply_pid(&g_dui_target_state, &g_dui_current_state);
 
 	apply_state(&g_dui_current_state);
-
-	delay(10);
 }
