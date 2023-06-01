@@ -24,6 +24,8 @@ def uart_flush():
         uart_send(byte)
         udelay(2000)
         uart_send(byte)
+        udelay(2000)
+
     __uart_buffer = bytearray()
 
 def tx_irq_handler(pin):
@@ -36,11 +38,11 @@ def uart_buffer(i):
     global __uart_buffer
     __uart_buffer.append(i)
 
-if __name__ == "__main__":
-    while True: # test commands
-        uart_buffer(0x29)
-        uart_buffer(0x70)
-        delay(1000)
-        uart_buffer(0xff)
-        uart_buffer(0x20)
-        delay(1000)
+#if __name__ == "__main__":
+while True: # test commands
+    uart_buffer(0x29)
+    uart_buffer(0x70)
+    delay(1000)
+    uart_buffer(0xff)
+    uart_buffer(0x20)
+    delay(1000)
