@@ -116,18 +116,21 @@ if __name__ == "__main__":
         middle_line = None
         for l in lines:
             length = l.theta()
-            roiImg.draw_line(l.line(), color=100,thickness=3)
+                #roiImg.draw_line(l.line(), color=100,thickness=3)
 
             if length > 85 and length < 95:
                 middle_line = l
+                #img.draw_line(l.line(), color=255,thickness=3)
+
                 #print("rho {} mag {} length {}".format(l.rho(),l.magnitude(),l.length()))
             else:
                 if length < 90:
                     left_line = l
-                    #roiImg.draw_line(l.line(), color=255,thickness=3)
+                    #img.draw_line(l.line(), color=100,thickness=3)
                 else:
                     right_line = l
-                    #roiImg.draw_line(l.line(), color=255,thickness=3)
+                    #img.draw_line(l.line(), color=50
+                    #,thickness=3)
 
 
         # Calculate the different steering angle.
@@ -135,7 +138,7 @@ if __name__ == "__main__":
         right_theta=0
         speed = DUI_CMD_SPEED_END
         if not corner:
-            if left_line and right_line:
+            if left_line and right_line and  not middle_line:
                 left_theta = left_line.theta()
                 right_theta = right_line.theta()
                 center_theta = (left_theta + right_theta) / 2
@@ -149,19 +152,19 @@ if __name__ == "__main__":
                 steering_angle = -MAX_STEERING_ANGLE
             elif (left_line and not right_line):
                 steering_angle = MAX_STEERING_ANGLE
-            elif (middle_line and right_line):
-                steering_angle = -MAX_STEERING_ANGLE
-                corner = True
-            elif (middle_line and left_line):
-                steering_angle = MAX_STEERING_ANGLE
-                corner = True
-            else:
-                steering_angle = 0.0
-                speed = DUI_CMD_SPEED_START
+            #elif (middle_line and right_line):
+                #steering_angle = -MAX_STEERING_ANGLE
+                #corner = True
+            #elif (middle_line and left_line):
+                #steering_angle = MAX_STEERING_ANGLE
+                #corner = True
+            #else:
+                #steering_angle = 0.0
+                #speed = DUI_CMD_SPEED_START
 
         # steering angle byte calculation
         steerByte = int((steering_angle + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
-
+        #print("steer {} speed {}".format(steering_angle,speed))
 
         # sending data:
         uart_buffer(steerByte)
