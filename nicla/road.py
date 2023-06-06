@@ -12,11 +12,11 @@ clock = time.clock()
 WIDTH = 480
 HEIGHT = 320
 
-HORIZON = 120
-STRETCH = 155
+HORIZON = 150
+STRETCH = 40
 SQUEEZE = 400
 
-STEERING_ENTHOUSIASM = 7.0
+STEERING_ENTHOUSIASM = 3.0
 ROAD_MIN_BRIGHTNESS = 0xa0
 
 points = [(STRETCH, HORIZON),
@@ -48,6 +48,7 @@ def drive(driveImg):
   avg *= STEERING_ENTHOUSIASM
   avg = max(-1, min(1, avg))
 
+  print(avg)
   steerByte = int((avg + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
   uart.uart_buffer(steerByte)
   sensor.dealloc_extra_fb()
