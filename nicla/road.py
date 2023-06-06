@@ -1,5 +1,6 @@
 import sensor, image, time, math
 import uart
+import traffic_light
 from consts import *
 
 sensor.reset()
@@ -23,8 +24,8 @@ points = [(STRETCH, HORIZON),
           (WIDTH-1+SQUEEZE, HEIGHT-1),
           (-SQUEEZE, HEIGHT-1)]
 
-def main():
-  img = sensor.snapshot()
+def drive(driveImg):
+  img = driveImg.copy()
   img.to_grayscale()
   img.replace(vflip=True, hmirror=True)
   img.rotation_corr(corners=points)
@@ -49,8 +50,14 @@ def main():
 
   steerByte = int((avg + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
   uart.uart_buffer(steerByte)
+  sensor.dealloc_extra_fb()
 
 while(True):
-  main()
+  img = sensor.snapshot()
+  data = traffic_light.traf_lights(img)
+  if data is not None:
+      print(data)
+      uart.uart_buffer(data)
+  drive(img)
   uart.uart_buffer(DUI_CMD_SPEED_END)
   clock.tick()

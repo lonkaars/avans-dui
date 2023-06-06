@@ -30,11 +30,9 @@ def rgb2hsv(rgb):
     h = (h/6.0) % 1.0
     return (h, s, v)
 
-while(True):
-    clock.tick()
-    img = sensor.snapshot()
-    ## todo: downsample img
-    original = img.copy(copy_to_fb=True)
+
+def traf_lights(img)
+    original = img.copy()
     img = img.to_grayscale()
     for blob in img.find_blobs([(0, 60)], pixels_threshold=100):
         aspect = blob.h() / blob.w()
@@ -63,3 +61,4 @@ while(True):
         img.draw_rectangle(blob.rect())
         img.draw_circle(lights[light_status-1][0], lights[light_status-1][1], 2)
         print(("", "rood", "geel", "groen")[light_status])
+        sensor.dealloc_extra_fb()
