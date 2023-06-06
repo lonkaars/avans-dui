@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <random>
 
-#include "pid.h"
+#include "../pid.h"
 
 int main() {
 	float P, I, D;

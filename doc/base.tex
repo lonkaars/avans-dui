@@ -19,13 +19,14 @@
 	style=apa
 ]{biblatex}
 \addbibresource{refs.bib}
+\usepackage{fancyvrb}
+\usepackage[nottoc]{tocbibind}
+\usepackage[en-US]{datetime2}
+
+\input{pandoc.tex}
 
 \setmainfont{TeX Gyre Schola}
 \setmathfont{TeX Gyre Schola Math}
-\sisetup{
-	group-separator = {.},
-	output-decimal-marker = {,}
-}
 
 \bigskipamount=7mm
 \medskipamount=4mm
@@ -56,6 +57,8 @@
 \begin{titlepage}
 \maketitle
 \thispagestyle{empty}
+\vfill
+\input{versionctl.tex}
 \end{titlepage}
 
 \tableofcontents
@@ -63,10 +66,11 @@
 
 \input{\jobname.md.tex}
 
-% \printbibliography[heading=bibintoc]
-% \printglossaries
-% \listoftables
-% \listoffigures
+\newpage
+\printbibliography[heading=bibintoc]
+\printglossaries
+\listoftables
+\listoffigures
 
 \end{document}
 

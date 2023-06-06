@@ -3,12 +3,12 @@ LD = g++
 RM = rm -f
 CFLAGS =
 LFLAGS =
-TARGET = pidtest
+TARGET = protocoltest
 
-SRCS := pidtest.cpp pid.cpp
-OBJS := pidtest.o pid.o
+SRCS := $(TARGET).cpp ../protocol.cpp
+OBJS := $(TARGET).o ../protocol.o
 
-all: pidtest
+all: $(TARGET)
 
 %.o: %.cpp
 	$(CPP) -c $(CFLAGS) $< -o $@

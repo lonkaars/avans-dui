@@ -71,8 +71,7 @@ description in section \ref{problem-statement}.
 
 ## Overview
 
-![Architecture overview (level 0)
-\label{fig:architecture-level-0}](../assets/architecture-level-0.pdf)
+![Architecture overview (level 0)](../assets/architecture-level-0.pdf){#fig:architecture-level-0}
 
 Figure \ref{fig:architecture-level-0} shows the hardware used in this project.
 Both the Pololu Zumo 32U4 (referred to as just "Zumo"), and the Arduino Nicla
@@ -196,10 +195,10 @@ This is a popular algorithm used to detect straight lines in an image. It works 
 
 For more information about Hough Transform algorithms check the below links:
 
-- [Wiki hough](https://en.wikipedia.org/wiki/Hough_transform  )
-- [Science article](https://www.sciencedirect.com/topics/computer-science/hough-transforms)
-- [OpenCV Hough](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html)
-- [OpenMV find_lines](https://docs.openmv.io/library/omv.image.html)
+- \citetitle{wikipedia:hough}
+- \citetitle{sciencedirect:hough}
+- \citetitle{opencv:hough}
+- \citetitle{openmv:find_lines}
 
 #### EDlines
 
@@ -207,10 +206,10 @@ EDLines, short for Edge Drawing Lines, is a feature-based algorithm that detects
 
 For more information about EDlines algorithms check the below links:
 
-- [github library](https://github.com/CihanTopal/ED_Lib)
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/S0167865511001772)
-- [EDLINES: REAL-TIME LINE SEGMENT DETECTION BY EDGE DRAWING (ED)](https://projet.liris.cnrs.fr/imagine/pub/proceedings/ICIP-2011/papers/1569406487.pdf)
-- [OpenCV EDlines doc](https://docs.opencv.org/3.4/d4/d8b/group__ximgproc__edge__drawing.html)
+- \citetitle{gh:ed_lib}
+- \citetitle{sciencedirect:edlines}
+- \citetitle{paper:edlines}
+- \citetitle{opencv:edgedrawing}
 
 #### Line Segment Detector
 
@@ -222,10 +221,10 @@ Once the line segments are detected, they are refined using a line merging algor
 
 For more information about Line Segment Detector algorithms check the below links:
 
-- [LSD: a Line Segment Detector pdf](http://www.ipol.im/pub/art/2012/gjmr-lsd/article.pdf)
-- [Working behind LSD](https://saiwa.ai/blog/line-segment-detection-2/)
-- [OpenCV LSD doc](https://docs.opencv.org/3.4/db/d73/classcv_1_1LineSegmentDetector.html)
-- [OpenMV find_line_segments](https://docs.openmv.io/library/omv.image.html)
+- \citetitle{paper:lsd}
+- \citetitle{saiwa:lsd}
+- \citetitle{opencv:lsd}
+- \citetitle{openmv:lsd}
 
 #### Radon transform
 
@@ -233,10 +232,10 @@ Radon transform is another popular algorithm used for line detection. It works b
 
 For more information about Radon transform algorithms check the below links:
 
-- [Science article](https://www.sciencedirect.com/science/article/abs/pii/0031320396000155)
-- [matlab Radon](https://stackoverflow.com/questions/35412573/radon-transform-line-detection)
-- [Matlab elaboration Radon](https://www.kevinpolisano.com/Doctorat/doc-matlab-exemple/radon_lines_detection.html)
-- [OpenCV Radon doc](https://docs.opencv.org/4.x/d5/d89/radon__transform_8hpp.html)
+- \citetitle{sciencedirect:radon}
+- \citetitle{stackoverflow:radon}
+- \citetitle{matlab:radon}
+- \citetitle{opencv:radon}
 
 ### Which algorithm is suitable for our project?
 
@@ -244,7 +243,7 @@ We have identified four different types of line detection algorithms that could 
 
 #### OpenMV
 
-The only two algorithms that work with OpenMV are Hough Transform, the function find_lines, and Line Segment Detector, also known as find_line_segments. Both of these have their ups and downs and could be used for our project. find_lines has the most ups whereas find_line_segemtns has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it.
+The only two algorithms that work with OpenMV are Hough Transform, the function `find_lines`, and Line Segment Detector, also known as `find_line_segments`. Both of these have their ups and downs and could be used for our project. `find_lines` has the most ups whereas `find_line_segments` has the most negative. As the result here below is decently optimized, it is first grayscaled, and then canny edge detection is done to it.
 
 For the test are the straight lines pictures used with different lighting additionality the left lane represents a whitish line and the right lane is drawn with a more darker color. here below are the pictures used:
 
@@ -252,9 +251,9 @@ For the test are the straight lines pictures used with different lighting additi
 
 ![picture 2](../RealTime_pictures/rtStraightLines.class/00018.jpg)
 
-##### find_lines
+##### `find_lines`
 
-The find_lines is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters.
+The `find_lines` is a very fast function where you can handle straight lines and other lines with at least 45 FPS or more. Also, have a lot of control over the different types of parameters.
 
 This is the outcome of picture 1:
 ![outcome_picture_1](../assets/hough_straightLines_Pic_0.png)
@@ -264,9 +263,9 @@ This is the outcome of picture 2:
 
 As you can see there isn't much of a difference between the two pictures.
 
-##### find_line_segments
+##### `find_line_segments`
 
-The find_line_segments is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory.
+The `find_line_segments` is a very slow function where you can find segments from a line. This is a easier to use function because it only has two parameters but the frame rate drops significantly. Additionally, the size of the image to run the algorithm on needs to be smaller because of memory.
 
 This is the outcome of picture 1:
 
@@ -286,7 +285,7 @@ All the above algorithms could be used with OpenCV, But the Radon transform need
 
 In order to make the Zumo robot both detect where it is on a road, and steer to
 keep driving on said road, some sort of communication needs to exist between
-the Nicla and Zumo. As mentioned earlier\footnote{dit is nog niet benoemd}, all
+the Nicla and Zumo. As mentioned in section \ref{distribution-of-features}, all
 machine vision-related tasks will happen on the Nicla board. Because the Nicla
 board is the first to know how much to steer the cart, it makes sense to have
 it control the cart by giving the Nicla a 'steering wheel' of sorts.
@@ -353,8 +352,8 @@ The complete protocol consists of single byte commands. A byte can either
 change the cart speed or steering direction, both will apply gradually. When no
 commands have been received for more than 2 seconds, the Zumo robot will
 gradually slow down until it is stopped. Exact specifications of commands are
-provided in the protocol specification document\footnote{dit document bestaat
-nog niet}.
+provided in the protocol specification in section
+\ref{niclazumo-communication-protocol}.
 }
 \communicationConclusion
 
@@ -395,6 +394,7 @@ The distinct color characteristics of traffic signs can attract drivers’ atten
 
 One can easily look at the RGB values to detect a certain color. Although the r,g and b values are heavily effected by different illuminations, therefore this isn't a reliable solution in variating lighting conditions.
 
+\needspace{5cm}
 An example implementation: 
 
 ```py
@@ -408,6 +408,7 @@ if(B >= thB)
 if((R + G) >= ThY)
 ```
 
+\needspace{4cm}
 It is possible to enhance the colors with maximum and minimum operations:
 
 ```py
@@ -416,13 +417,18 @@ fB(i) = max(0, min(iB − iR, iB − iG)/s),
 fY(i) = max(0, min(iR − iB, iG − iB)/s).
 ```
 
-This method can result in some issues on the blue channel (see source 1 page 86583 for more explanation). As a solution to this issue use the following formula for the blue channel instead:
+\needspace{2cm}
+This method can result in some issues on the blue channel
+\footcite[86583]{ieee:sign-detection}. As a solution to this issue use the
+following formula for the blue channel instead:
+
 ```py
-f′B(i) = max((0, iB − iR)/s).
+_fB(i) = max((0, iB − iR)/s).
 ```
 
 #### HSV
 
+\needspace{6cm}
 The HSV/HSI color space is more immune to the illumination challenges of RGB. The hue and saturation channels can be calculated using RGB, which increases the processing time.
 The following pseudo code shows how to detect the red, blue and yellow colors in this space.
 
@@ -450,12 +456,13 @@ This color space is used for finding uncorrelated color components, the L\*a\*b\
 
 This method avoids the use of fixed thresholds that might need adjusting at times. In order to resolve this some authors tried to transfer the problem into pixel classification where a neural network classifies every pixel in the input image, the pixel classification algorithms are often slower than other color extraction methods.
 
-#### results
-
-\def\signDetectionColor{
-The above described methods where also applied to a database in order to compare each method. This resulted in the conclusion that, using a normalized RGB space is giving the a mixture of most detections and least false-positve results. See source 1 page 86584 for the full report.
+\def\signDetectionColorConclusion{
+All color-based detection methods where also applied to a database in order to
+compare each method. Experiments concluded that using a normalized RGB space is
+giving the a mixture of most detections and least false-positve
+results\footcite{ieee:sign-detection}.
 }
-\signDetectionColor
+\signDetectionColorConclusion
 
 ### Shape based
 
@@ -484,17 +491,17 @@ For example, using a color based detection to find a ROI and using shape detecti
 ### Neural networks
 <!-- TODO: -->
 
-### results
-
-\def\signDetectionShape{
-Most shape based recognition methods are more complex than using a color based detection. But the method 'Fourier' seems the most useful as it can also deal with rotated and occluded objects. 
+\def\signDetectionShapeConclusion{
+Most shape based recognition methods are more complex than using a color based
+detection. But the method `Fourier' seems the most useful as it can also deal
+with rotated and occluded objects. 
 }
-\signDetectionShape
+\signDetectionShapeConclusion
 
 ## Traffic Sign Recognition (TSR)
 After traffic sign detection or tracking, traffic sign recognition is performed to classify the detected traffic signs into correct classes.
 
-![signs example](../assets/signs.png)
+![signs example](../assets/signs.png){#fig:signs-example}
 
 ### Binary tree
 The binary-tree-based classification method usually classify traffic signs according to the shapes and colors in a coarse-to-fine tree process.
@@ -502,22 +509,18 @@ The binary-tree-based classification method usually classify traffic signs accor
 ### Support Vector Machine (SVM)
 As a binary-classification method, SVM classifies traffic signs using one-vs-one or one-vs-others classification process.
 
-## results
-
-\def\signRecognition{
-While making a binary tree is seemingly the most simple, yet effective solution. Using the 'Fourier' method is a bit more complex, it may be a better solution (this requires testing).
+\def\signRecognitionConclusion{
+While making a binary tree is seemingly the most simple, yet effective
+solution. Using the `Fourier' method is a bit more complex, it may be a better
+solution (this requires testing).
 }
-\signRecognition
+\signRecognitionConclusion
 
 # Conclusion
 
 \communicationConclusion
 \buildSystemConclusion
-\signDetectionColor
-\signDetectionShape
-\signRecognition
-
-## Sources:
-
-1. [IEEE, Digital Object Identifier June 26, 2019 (pages 86578 - 86596)](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8746141)
+\signDetectionColorConclusion
+\signDetectionShapeConclusion
+\signRecognitionConclusion
 

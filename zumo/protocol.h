@@ -26,10 +26,6 @@ typedef struct {
 	float speed_mod; /** @brief global speed multiplier */
 } dui_state_t;
 
-/** @brief non blocking read byte */
-unsigned char uart_read();
 /** @brief read and apply cmd to state */
 void handle_cmd(unsigned char cmd, dui_state_t *state);
-/** @brief apply state to motors */
-void apply_state(dui_state_t* state);
 
