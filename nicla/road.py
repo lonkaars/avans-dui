@@ -60,5 +60,5 @@ while(True):
       print(data)
       uart.uart_buffer(data)
   drive(img)
-  uart.uart_buffer(DUI_CMD_SPEED_END)
+  #uart.uart_buffer(DUI_CMD_SPEED_END)
   clock.tick()
