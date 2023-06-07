@@ -2,7 +2,6 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-
 #include "control.h"
 #include "protocol.h"
 #include "pid.h"
@@ -24,12 +23,9 @@ void setup() {
 	pinMode(DUI_PINOUT_NICLA_TX, OUTPUT);
 	pinMode(DUI_PINOUT_NICLA_RX, INPUT_PULLUP);
 	Serial.begin(11500);
-
 }
 
 void loop() {
-
-
 	static unsigned char cmd_old = 0x00;
 	for (unsigned int i = 0; i < 1000; i++) {
 		digitalWrite(DUI_PINOUT_NICLA_TX, LOW);
@@ -44,6 +40,4 @@ void loop() {
 	g_dui_current_state.current_sign = g_dui_target_state.current_sign;
 
 	apply_state(&g_dui_current_state);
-
- 
 }

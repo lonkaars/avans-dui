@@ -13,18 +13,18 @@
 Zumo32U4OLED display;
 
 void handle_cmd(unsigned char cmd, dui_state_t *state) {
-    Serial.println(cmd,HEX);
+	Serial.println(cmd, HEX);
 
 	if (cmd == DUI_CMD_NULL) return;
 	else if (DUI_CMD_SIGN_START <= cmd && cmd <= DUI_CMD_SIGN_END) {
 		state->current_sign = (dui_e_sign) (cmd - DUI_CMD_SIGN_START);
-    display.clear();
-    display.print(state->current_sign+1);
-    display.gotoXY(0, 1);
+		display.clear();
+		if (DUI_SIGN_LOOKUP[state->current_sign] == nullptr) return;
+		display.print(DUI_SIGN_LOOKUP[state->current_sign]);
 	} else if (DUI_CMD_SPEED_START <= cmd && cmd <= DUI_CMD_SPEED_END) {
-    Serial.print(" Hallo: " );
+		Serial.print(" Hallo: " );
 		state->Speed = (float) (cmd - DUI_CMD_SPEED_START) / (float) (DUI_CMD_SPEED_END - DUI_CMD_SPEED_START);
-   Serial.println(state->Speed);
+		Serial.println(state->Speed);
 	} else if (DUI_CMD_STEER_START <= cmd && cmd <= DUI_CMD_STEER_END) {
 		state->steer = (float) (cmd - DUI_CMD_STEER_START) / (float) (DUI_CMD_STEER_END - DUI_CMD_STEER_START) * (float) 2 - (float) 1;
 	}
