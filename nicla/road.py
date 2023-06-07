@@ -26,7 +26,6 @@ points = [(STRETCH, HORIZON),
           (-SQUEEZE, HEIGHT-1)]
 
 def drive(driveImg):
-  img = driveImg.copy()
   img.to_grayscale()
   img.replace(vflip=True, hmirror=True)
   img.rotation_corr(corners=points)
@@ -50,23 +49,24 @@ def drive(driveImg):
   print(avg)
   steerByte = int((avg + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
   uart.uart_buffer(steerByte)
-  sensor.dealloc_extra_fb()
-count = 0
+
+
+speed = signs_detect.init_kpts("speed")
+stop = signs_detect.init_kpts("stop")
+car = signs_detect.init_kpts("image")
 while(True):
-  if count == 0:
-    count = count + 1
-    speed = signs_detect.init_kpts("speed")
-    #stop = signs_detect.init_kpts("stop")
-    #car = signs_detect.init_kpts("image")
-  else:
+
       img = sensor.snapshot()
       data = traffic_light.traf_lights(img)
       if data is not None:
           uart.uart_buffer(data)
 
-        #data_sign = signs_detect.sign_detection(img)
-        #if data_sign is not None:
-          #uart.uart_buffer(data_sign)
 
-      drive(img)
+      sign_img = sensor.snapshot()
+      data_sign = signs_detect.sign_detection(sign_img)
+      if data_sign is not None:
+        uart.uart_buffer(data_sign)
+
+      drive_img = sensor.snapshot()
+      drive(drive_img)
       #uart.uart_buffer(DUI_CMD_SPEED_END)

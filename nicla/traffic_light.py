@@ -32,7 +32,6 @@ def rgb2hsv(rgb):
 
 
 def traf_lights(imgTraffic):
-    original = imgTraffic.copy()
     img = imgTraffic.to_grayscale()
     for blob in img.find_blobs([(0, 60)], pixels_threshold=100):
         aspect = blob.h() / blob.w()
@@ -61,7 +60,6 @@ def traf_lights(imgTraffic):
         img.draw_rectangle(blob.rect())
         img.draw_circle(lights[light_status-1][0], lights[light_status-1][1], 2)
         #print(("", "rood", "geel", "groen")[light_status])
-        sensor.dealloc_extra_fb()
 
         if light_status == 1:
             return 0x06

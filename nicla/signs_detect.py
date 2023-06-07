@@ -7,7 +7,6 @@ def init_kpts(str):
     temp_img = image.Image(f"./{str}.jpg",copy_to_fb=True)
     temp_img.to_grayscale()
     kpts = temp_img.find_keypoints(max_keypoints=128, threshold=kpts_threshold, corner_detector=kpts_corner, scale_factor=1.2)
-    temp_img.dealloc_extra_fb()
     return kpts
 
 def match_kpts(kpts0, kpts1):
@@ -37,8 +36,7 @@ def read_red_sign(val, img, kpts):
 
 #def read_red_sign(val, img, kpts):
 
-def sign_detection(img_sign):
-    img = img_sign.copy()
+def sign_detection(img):
     ######## Detect signs
     blobs_r = img.find_blobs([(0, 100, 25, 63, -128, 127)])
     blobs_b = img.find_blobs([(0, 29, 11, -128, -31, -5)])
@@ -58,7 +56,6 @@ def sign_detection(img_sign):
         for index, b in enumerate(blobs_r):
             sign_buffer = read_red_sign(b, img, kpts_img)
 
-        for index, b in enumerate(blobs_b):
-            sign_buffer = read_blu_sign(b, img, kpts_img)
-    sensor.dealloc_extra_fb()
+        #for index, b in enumerate(blobs_b):
+            #sign_buffer = read_blu_sign(b, img, kpts_img)
     return sign_buffer
