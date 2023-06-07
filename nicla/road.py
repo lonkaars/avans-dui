@@ -27,41 +27,40 @@ points = [(STRETCH, HORIZON),
           (WIDTH-1+SQUEEZE, HEIGHT-1),
           (-SQUEEZE, HEIGHT-1)]
 
-def drive(driveImg):
-  img.to_grayscale()
-  img.replace(vflip=True, hmirror=True)
-  img.rotation_corr(corners=points)
-  img.gaussian(3)
 
-  offset_sum = 0.0
-  offset_count = 0.0
-  for blob in img.find_blobs([(ROAD_MIN_BRIGHTNESS, 0xff)], pixels_threshold=100):
-    img.draw_rectangle(blob.rect())
-    area_weight = MIN_AREA + min(MAX_AREA, blob.w() * blob.h()) # limit max area_weight so small blobs still have impact
-    horizontal_pos = (blob.x() + blob.w()/2) / WIDTH
-    offset_sum += horizontal_pos * area_weight
-    offset_count += area_weight
-  # dit tegen niemand zeggen
-  if offset_count < 0.01: return
-  avg = offset_sum / offset_count
-  avg = avg * 2 - 1
-  avg *= STEERING_ENTHOUSIASM
-  avg = max(-1, min(1, avg))
+def drive(img):
+    img.to_grayscale()
+    img.replace(vflip=True, hmirror=True)
+    img.rotation_corr(corners=points)
+    img.gaussian(3)
 
-  print(avg)
-  steerByte = int((avg + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
-  uart.uart_buffer(steerByte)
+    offset_sum = 0.0
+    offset_count = 0.0
+    for blob in img.find_blobs([(ROAD_MIN_BRIGHTNESS, 0xff)], pixels_threshold=100):
+        img.draw_rectangle(blob.rect())
+        area_weight = MIN_AREA + min(MAX_AREA, blob.w() * blob.h()) # limit max area_weight so small blobs still have impact
+        horizontal_pos = (blob.x() + blob.w()/2) / WIDTH
+        offset_sum += horizontal_pos * area_weight
+        offset_count += area_weight
+    # dit tegen niemand zeggen
+    if offset_count < 0.01: return
+    avg = offset_sum / offset_count
+    avg = avg * 2 - 1
+    avg *= STEERING_ENTHOUSIASM
+    avg = max(-1, min(1, avg))
+
+    steerByte = int((avg + 1.0) * (DUI_CMD_STEER_END - DUI_CMD_STEER_START) / 2 + DUI_CMD_STEER_START)
+
+    uart.uart_buffer(steerByte)
 
 
-speed = signs_detect.init_kpts("speed")
-stop = signs_detect.init_kpts("stop")
-car = signs_detect.init_kpts("image")
+
 while(True):
 
-      img = sensor.snapshot()
-      data = traffic_light.traf_lights(img)
-      if data is not None:
-          uart.uart_buffer(data)
+      #img = sensor.snapshot()
+      #data = traffic_light.traf_lights(img)
+      #if data is not None:
+          #uart.uart_buffer(data)
 
 
       sign_img = sensor.snapshot()
@@ -71,4 +70,4 @@ while(True):
 
       drive_img = sensor.snapshot()
       drive(drive_img)
-      #uart.uart_buffer(DUI_CMD_SPEED_END)
+      uart.uart_buffer(0x1f)

@@ -15,7 +15,7 @@ def match_kpts(kpts0, kpts1):
         #print("matched:%d dt:%d"%(match.count(), match.theta()))
         if match.count() > 0:
             print(match.count())
-        return match.count() > 1
+        return match.count() > 0
     else:
         return 0
 

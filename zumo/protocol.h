@@ -21,11 +21,10 @@ typedef enum {
 
 typedef struct {
 	float steer; /** @brief steer value (-1 is left, +1 is right) */
-	float speed; /** @brief speed (0-15) */
+	float Speed; /** @brief speed (0-15) */
 	dui_e_sign current_sign; /** @brief last seen sign */
 	float speed_mod; /** @brief global speed multiplier */
 } dui_state_t;
 
 /** @brief read and apply cmd to state */
 void handle_cmd(unsigned char cmd, dui_state_t *state);
-
