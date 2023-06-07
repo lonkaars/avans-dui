@@ -10,6 +10,8 @@ clock = time.clock()
 
 WIDTH = 480
 HEIGHT = 320
+MAX_AREA = WIDTH * HEIGHT / 10
+MIN_AREA = 40
 
 HORIZON = 150
 STRETCH = 40
@@ -35,7 +37,7 @@ def main():
 
   for blob in img.find_blobs([(ROAD_MIN_BRIGHTNESS, 0xff)], pixels_threshold=100):
     img.draw_rectangle(blob.rect())
-    area_weight = blob.area()
+    area_weight = MIN_AREA + min(MAX_AREA, blob.w() * blob.h()) # limit max area_weight so small blobs still have impact
     horizontal_pos = (blob.x() + blob.w()/2) / WIDTH
     offset_sum += horizontal_pos * area_weight
     offset_count += area_weight
