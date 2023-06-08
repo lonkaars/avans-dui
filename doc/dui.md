@@ -34,8 +34,8 @@ description in section \ref{problem-statement}.
   \begin{enumerate}
     \item Driving when not on a road is not allowed
     \item The vehicle can follow a road by steering itself accordingly
-    \item Driving off the road is only allowed when necessary for the camera to
-          keep seeing the road
+    \item \label{req:offroad} Driving off the road is only allowed when
+    necessary for the camera to keep seeing the road
   \end{enumerate}
   \item \label{req:traffic-lights}
   The vehicle handles traffic lights in the following way
@@ -236,6 +236,38 @@ For more information about Radon transform algorithms check the below links:
 - \citetitle{stackoverflow:radon}
 - \citetitle{matlab:radon}
 - \citetitle{opencv:radon}
+
+#### Blob detection for roads
+
+As mentioned in section \ref{specifications} requirement \ref{req:offroad}, the
+car is allowed to drive off-road to keep the road visible. This means that a
+naive approach where the car drives towards where 'the most road' is could
+suffice for our road detection needs.
+
+A simple prototype for this approach was made using Matlab, shown in figure
+\ref{fig:matlab-roaddetect}. The top part of the figure shows the raw camera
+image (flipped), with a gray line down the middle, and a red arrow showing the
+steering value. The red arrow is the only 'output' of this algorithm.
+
+The bottom part of the figure shows the detected blobs (green bounding boxes)
+on a copy of the original top image with the following transforms:
+
+1. Reverse perspective-transform
+2. Gaussian blur (3x3 kernel) to smooth out any noise caused by the floor
+   texture
+3. Threshold to match most of the light image parts (road)
+
+The steering value (red arrow) is calculated by averaging the horizontal screen
+position (normalized to between -1 and 1) using a weight factor calculated by
+using each blobs bounding box area. The weight factor has a minimum 'base'
+value that is added, and has a maximum value so large blobs don't 'overpower'
+smaller blobs. This is so the inside road edge of a turn doesn't get lost
+because the outer edge has a larger bounding box.
+
+![Road detection prototype in Matlab](../assets/blob_invpers.pdf){#fig:matlab-roaddetect}
+
+The implementation of this road detection algorithm is provided in the source
+code tree.
 
 ### Which algorithm is suitable for our project?
 
@@ -515,6 +547,37 @@ solution. Using the `Fourier' method is a bit more complex, it may be a better
 solution (this requires testing).
 }
 \signRecognitionConclusion
+
+## Traffic light detection using blobs
+
+A simple traffic light detection algorithm using blob detection can take
+advantage of the following properties of traffic lights (as seen by the Nicla
+module):
+
+- Traffic lights are mostly dark
+- Traffic lights are generally rectangular
+- Traffic lights have fixed spots where the saturation and hue value ranges are
+  known if the light is on
+
+The algorithm has the following steps:
+
+1. Apply a threshold to keep only dark areas
+2. Prune any blobs with too little surface area
+3. Prune any blobs that aren't a vertical rectangle with approximately the same
+   aspect ratio as a traffic light
+4. Poke three points down the center of each blob, at 20%, 50%, and 80% of the
+   blob's height
+5. Check if any of the three points has a matching hue and saturation range of
+   a lit up light
+6. The first point that matches is deemed to be the traffic light's color, if
+   no points match, it's probably not a traffic light
+
+Figure \ref{fig:matlab-trafficlight} shows this algorithm on an example image:
+
+![Traffic light detection prototype in Matlab](../assets/blob_traffic_lights.pdf){#fig:matlab-trafficlight}
+
+The implementation of this road detection algorithm is provided in the source
+code tree.
 
 # Conclusion
 
