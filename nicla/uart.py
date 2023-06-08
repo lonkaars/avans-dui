@@ -16,14 +16,15 @@ def uart_send(byte):
 __uart_buffer = bytearray()
 def uart_flush():
     global __uart_buffer
-    print("UART FLUSH START")
+    # print("UART FLUSH START")
     for byte in __uart_buffer:
-        print(f"BYTE 0x{byte:02X}")
+        # print(f"BYTE 0x{byte:02X}")
         uart_send(byte) # dit is de oplossing
         udelay(2000)
         uart_send(byte)
         udelay(2000)
         uart_send(byte)
+        udelay(2000)
     __uart_buffer = bytearray()
 
 def tx_irq_handler(pin):

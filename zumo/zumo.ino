@@ -8,13 +8,13 @@
 
 dui_state_t g_dui_target_state = {
 	.steer = 0.0f,
-	.speed = 0.0f,
+	.Speed = 0.0f,
 	.current_sign = DUI_SIGN_NONE,
 	.speed_mod = 1.f,
 };
 dui_state_t g_dui_current_state = {
 	.steer = 0.f,
-	.speed = 0.f,
+	.Speed = 0.f,
 	.current_sign = DUI_SIGN_NONE,
 	.speed_mod = 1.f,
 };
@@ -22,7 +22,7 @@ dui_state_t g_dui_current_state = {
 void setup() {
 	pinMode(DUI_PINOUT_NICLA_TX, OUTPUT);
 	pinMode(DUI_PINOUT_NICLA_RX, INPUT_PULLUP);
-	Serial.begin(115200);
+	Serial.begin(11500);
 }
 
 void loop() {

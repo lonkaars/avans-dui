@@ -6,11 +6,11 @@
 #include "control.h"
 
 #define DUI_SPEED_MOD 96.0f
-#define DUI_MOTOR_DIFF 0.6f
+#define DUI_MOTOR_DIFF 0.62f
 
 void apply_state(dui_state_t *state) {
-	float motor_l = 0.5f * state->speed * (+1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
-	float motor_r = 0.5f * state->speed * (-1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
+	float motor_l = 0.5f * state->Speed * (+1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
+	float motor_r = 0.5f * state->Speed * (-1.f * state->steer * DUI_MOTOR_DIFF - DUI_MOTOR_DIFF + 2) * state->speed_mod * DUI_SPEED_MOD;
 
 	Serial.print(motor_l);
 	Serial.print(" ");
@@ -18,8 +18,7 @@ void apply_state(dui_state_t *state) {
 
 	Serial.println("");
 
-	Zumo32U4Motors::setLeftSpeed((int16_t) motor_l);
-	Zumo32U4Motors::setRightSpeed((int16_t) motor_r);
+	Zumo32U4Motors::setSpeeds((int16_t) motor_l,(int16_t) motor_r);
 
 	// TODO: print sign on OLED screen
 }
@@ -38,6 +37,5 @@ unsigned char uart_read() {
 	}
 
 	delayMicroseconds(1000); // wait out stop bit
-
 	return byte;
 }
