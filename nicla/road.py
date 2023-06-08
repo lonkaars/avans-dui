@@ -27,6 +27,28 @@ points = [(STRETCH, HORIZON),
           (WIDTH-1+SQUEEZE, HEIGHT-1),
           (-SQUEEZE, HEIGHT-1)]
 
+class CircularBuffer:
+    def __init__(self, size):
+        self.buffer = [None] * size
+        self.size = size
+        self.index = 0
+        self.counter = 0
+        self.output_value = None
+
+    def add(self, value):
+        self.buffer[self.index] = value
+        self.index = (self.index + 1) % self.size
+
+        if self.counter > 0 and self.buffer[self.index] == self.output_value:
+            self.counter += 1
+        else:
+            self.output_value = value
+            self.counter = 1
+
+        if self.counter == self.size * 2 // 3:
+            return self.output_value
+
+        return None
 
 def drive(img):
     img.to_grayscale()
@@ -54,20 +76,21 @@ def drive(img):
     uart.uart_buffer(steerByte)
 
 
+traffic_buffer = CircularBuffer(2)
+sign_buffer = CircularBuffer(3)
 
 while(True):
 
-      #img = sensor.snapshot()
-      #data = traffic_light.traf_lights(img)
-      #if data is not None:
-          #uart.uart_buffer(data)
-
+      img = sensor.snapshot()
+      data = traffic_buffer.add(traffic_light.traf_lights(img))
+      if data is not None:
+        uart.uart_buffer(data)
 
       sign_img = sensor.snapshot()
-      data_sign = signs_detect.sign_detection(sign_img)
-      if data_sign is not None:
-        uart.uart_buffer(data_sign)
+      data = sign_buffer.add(signs_detect.sign_detection(sign_img))
+      if data is not None:
+        uart.uart_buffer(data)
 
-      drive_img = sensor.snapshot()
-      drive(drive_img)
-      uart.uart_buffer(0x1f)
+      #drive_img = sensor.snapshot()
+      #drive(drive_img)
+      #uart.uart_buffer(0x1f)

@@ -32,6 +32,7 @@ def rgb2hsv(rgb):
 
 
 def traf_lights(imgTraffic):
+    original = imgTraffic.copy(copy_to_fb=True)
     img = imgTraffic.to_grayscale()
     for blob in img.find_blobs([(0, 60)], pixels_threshold=100):
         aspect = blob.h() / blob.w()
@@ -62,10 +63,10 @@ def traf_lights(imgTraffic):
         #print(("", "rood", "geel", "groen")[light_status])
 
         if light_status == 1:
-            return 0x06
-        elif light_status == 2:
             return 0x07
-        elif light_status == 3:
+        elif light_status == 2:
             return 0x08
+        elif light_status == 3:
+            return 0x09
         else:
             return 0x01
