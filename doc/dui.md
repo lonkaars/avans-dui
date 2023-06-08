@@ -281,6 +281,16 @@ As you can see there is quite a lot of difference between them. This function ne
 
 All the above algorithms could be used with OpenCV, But the Radon transform needs more work than the others with the amount of information in the doc.
 
+
+\def\roadConclusion{
+In conclusion, line detection offers various possibilities, and through testing and experimentation, we employed the blobbing method using OpenMV due to the limitations with WiFi communication. Additionally, we chose blobbing for its robust and straightforward algorithm. However, while I still believe that the Hough transform is generally superior in terms of diversity and consistency in line detection, it presented challenges in our specific project due to the varying floors and lighting conditions, requiring additional image processing.
+
+Later in the project, we discovered a new image processing technique called image correction, also known as bird's eye view. This approach allowed us to visualize more lines and provided greater opportunities when combined with the Hough transform. Although blobbing also utilized bird's eye view, the Hough transform offered more precision.
+
+In summary, we chose for blobbing due to its robust and simplified algorithm, resulting in higher frames per second (fps). However, the Hough transform demonstrated greater precision when combined with bird's eye view. Considering the time constraints, achieving optimal integration between these techniques proved to be challenging.
+}.
+\roadConclusion
+
 ## Communication between the Nicla and Zumo
 
 In order to make the Zumo robot both detect where it is on a road, and steer to
@@ -523,4 +533,4 @@ solution (this requires testing).
 \signDetectionColorConclusion
 \signDetectionShapeConclusion
 \signRecognitionConclusion
-
+\roadConclusion

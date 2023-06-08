@@ -91,6 +91,6 @@ while(True):
       if data is not None:
         uart.uart_buffer(data)
 
-      #drive_img = sensor.snapshot()
-      #drive(drive_img)
-      #uart.uart_buffer(0x1f)
+      drive_img = sensor.snapshot()
+      drive(drive_img)
+      uart.uart_buffer(0x1f)
