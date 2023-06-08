@@ -2,7 +2,11 @@ import sensor, image, time, math
 import uart
 import signs_detect
 import traffic_light
+from garbage_filter import garbage_filter
 from consts import *
+
+buffer_lights = list()
+buffer_signs = list()
 
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
@@ -76,21 +80,24 @@ def drive(img):
     uart.uart_buffer(steerByte)
 
 
-traffic_buffer = CircularBuffer(2)
-sign_buffer = CircularBuffer(3)
+
+
 
 while(True):
 
-      img = sensor.snapshot()
-      data = traffic_buffer.add(traffic_light.traf_lights(img))
-      if data is not None:
-        uart.uart_buffer(data)
+      #img = sensor.snapshot()
+      #data = traffic_light.traf_lights(img)
+      #new_data = garbage_filter(buffer_lights,data,3,21)
+      #if new_data is not None:
+        #uart.uart_buffer(data)
 
       sign_img = sensor.snapshot()
-      data = sign_buffer.add(signs_detect.sign_detection(sign_img))
-      if data is not None:
+      data = signs_detect.sign_detection(sign_img)
+      new_data = garbage_filter(buffer_signs,data,3,21)
+
+      if new_data is not None:
         uart.uart_buffer(data)
 
-      drive_img = sensor.snapshot()
-      drive(drive_img)
-      uart.uart_buffer(0x1f)
+      #drive_img = sensor.snapshot()
+      #drive(drive_img)
+      #uart.uart_buffer(0x1f)
